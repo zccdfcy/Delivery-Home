@@ -8,3 +8,5 @@ Spring Boot based Web Service for Online Shopping, Ordering and Backend Manageme
 •	Designed RESTful API for URL location resources and CRUD operations, with MySQL database, Redis as cache.
 
 •	Realized Authentication, Buy Now, Add to Cart, Checkout, Order Generation, Payment and Backend Management.
+
+[Demo] https://youtu.be/brxzkA1Wuo0
