@@ -1,0 +1,40 @@
+<div th:fragment="html"> 
+	<script>
+		$(function(){
+			var oid = getUrlParms("oid");
+			var total = getUrlParms("total");
+	        var data4Vue = {
+	        		uri:'forepayed',
+	        		order:[],
+	        		total:0
+	        };
+	        //ViewModel
+	        var vue = new Vue({
+	            el: '#workingArea',
+	            data: data4Vue,
+	            mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
+	            	this.total = total;
+	            	this.load();
+	            },        
+	            methods: {     	
+	            	load:function(){
+	                    var url =  this.uri+"?oid="+oid;
+	                    axios.get(url).then(function(response) {
+	                    	vue.order = response.data;
+	                    });
+	            	}
+	            }
+	        });       			
+			
+		})		
+	
+	</script>
+
+	<div class="payedDiv">
+		<div class="payedTextDiv">
+			<img src="img/site/paySuccess.png">
+			<span>Paid Successfully</span>
+			
+		</div>
+	</div>
+</div>

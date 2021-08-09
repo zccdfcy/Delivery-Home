@@ -1,0 +1,85 @@
+<div th:fragment="html">
+    <script>
+        $(function(){
+            var data4Vue = {
+                uri:'forelogin',
+                result: [],
+                user:{name:'', password:''}
+            };
+            //ViewModel
+            var vue = new Vue({
+                el: '#workingArea',
+                data: data4Vue,
+                mounted:function(){
+                    linkDefaultActions();
+                },
+                methods: {
+                    login:function(){
+                        var url =  this.uri;
+                        if(0==this.user.name.length){
+                            $("span.errorMessage").html("Please enter your username");
+                            $("div.loginErrorMessageDiv").css("visibility","visible");
+                            return;
+                        }
+                        if(0==this.user.password.length){
+                            $("span.errorMessage").html("Please enter your password");
+                            $("div.loginErrorMessageDiv").css("visibility","visible");
+                            return;
+                        }
+
+                        axios.post(url,this.user).then(function(response) {
+                            var result = response.data;
+                            if(result.code==0){
+                                location.href="home";
+                            }
+                            else{
+                                $("span.errorMessage").html(result.message);
+                                $("div.loginErrorMessageDiv").css("visibility","visible");
+                            }
+                        });
+                    }
+                }
+            });
+
+            var left = window.innerWidth/2+162;
+            $("div.loginSmallDiv").css("left",left);
+        })
+    </script>
+
+
+    <div id="loginDiv" style="position: relative">
+        <img id="loginBackgroundImg" class="loginBackgroundImg" src="img/site/loginBackground.jpg">
+        <div id="loginSmallDiv" class="loginSmallDiv">
+            <div class="loginErrorMessageDiv">
+                <div class="alert alert-danger" >
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                    <span class="errorMessage">22</span>
+                </div>
+            </div>
+
+            <div class="login_acount_text">Login</div>
+            <div class="loginInput " >
+					<span class="loginInputIcon ">
+						<span class=" glyphicon glyphicon-user"></span>
+					</span>
+                <input v-model="user.name" placeholder="Phone/Username/Email" type="text">
+            </div>
+
+            <div class="loginInput " >
+					<span class="loginInputIcon ">
+						<span class=" glyphicon glyphicon-lock"></span>
+					</span>
+                <input v-model="user.password" type="password" placeholder="password" >
+            </div>
+
+            <div>
+                <a href="#nowhere">Forget Password</a>
+                <a href="register" class="pull-right">Register</a>
+            </div>
+            <div style="margin-top:20px">
+                <button class="btn btn-block redButton" type="button" @click="login">Login</button>
+            </div>
+
+        </div>
+    </div>
+</div>
